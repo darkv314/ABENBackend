@@ -25,17 +25,19 @@ export class RolesResolver {
     private usuariosService: UsuariosService,
   ) {}
 
+  @Roles('admin')
   @Query((returns) => Rol, { nullable: true, name: 'rol' })
   async getRol(@Args('id', { type: () => Int }) id: number) {
     return this.rolesService.findById(id);
   }
 
-  @Roles('Client')
+  @Roles('admin')
   @Query((returns) => [Rol], { nullable: true, name: 'roles' })
   async getAllRoles() {
     return this.rolesService.findAll();
   }
 
+  @Roles('admin')
   @Mutation((returns) => Rol, { name: 'rol' })
   async createRol(@Args('nombre') nombre: string) {
     return this.rolesService.createRole({ nombre });

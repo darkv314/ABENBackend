@@ -12,6 +12,7 @@ export class RolGuard implements CanActivate {
   ): boolean | Promise<boolean> | Observable<boolean> {
     const ctx = GqlExecutionContext.create(context);
     const user = ctx.getContext().req.user;
+    // console.log(user);
     const roles: string[] = this.reflector.get('roles', context.getHandler());
     if (!roles) return true;
     return user && user.rol && roles.includes(user.rol);

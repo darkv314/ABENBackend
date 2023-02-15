@@ -1,9 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { UsuariosService } from 'src/app/usuarios/usuario.service';
 import { Usuario } from 'src/app/usuarios/dto/user.dto';
-import { UsuarioInputLogin } from 'src/app/usuarios/dto/userInputLogin.dto';
 import { UsuarioLogin } from 'src/app/usuarios/dto/userLogin.dto';
 import { JwtService } from '@nestjs/jwt';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
@@ -14,8 +14,14 @@ export class AuthService {
 
   async validarUsuario(email: string, password: string): Promise<Usuario> {
     const usuario = await this.usuariosService.findByEmail(email);
+    let valid = false;
+    try {
+      valid = await bcrypt.compare(password, usuario?.password);
+    } catch (err) {
+      throw new NotFoundException();
+    }
 
-    if (usuario && usuario.password === password) {
+    if (usuario && valid) {
       const { password, rolId, ...resultado } = usuario;
 
       return resultado;
