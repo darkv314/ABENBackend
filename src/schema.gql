@@ -1,0 +1,64 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Estado {
+  id: Int!
+
+  """
+  Nombre del estado, indica en que parte del proceso se encuentra un servicio
+  """
+  nombre: String!
+}
+
+type Usuario {
+  id: Int!
+
+  """Nombre de la empresa cliente"""
+  nombre: String!
+  telefono: String
+  email: String!
+
+  """Estados en los que esta trabajando un usuario de tipo laboratorio"""
+  estados: [Estado!]!
+}
+
+type Rol {
+  id: Int!
+
+  """Nombre del rol"""
+  nombre: String!
+
+  """Usuarios de un rol"""
+  usuarios: [Usuario!]!
+}
+
+type UserRol {
+  id: Int!
+
+  """Nombre del rol"""
+  nombre: String!
+}
+
+type UsuarioLogin {
+  access_token: String!
+  nombre: String!
+  telefono: String!
+  email: String!
+  rol: UserRol!
+}
+
+type Query {
+  rol(id: Int!): Rol
+  roles: [Rol!]
+}
+
+type Mutation {
+  rol(nombre: String!): Rol!
+  login(inputLogin: UsuarioInputLogin!): UsuarioLogin!
+}
+
+input UsuarioInputLogin {
+  email: String!
+  password: String!
+}

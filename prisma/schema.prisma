@@ -24,13 +24,15 @@ model Rol {
 }
 
 model Usuario {
-  id       Int      @id @default(autoincrement())
-  nombre   String
-  telefono String?
-  email    String   @unique
-  rol      Rol      @relation(fields: [rolId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  rolId    Int
-  estados  Estado[]
+  id        Int        @id @default(autoincrement())
+  nombre    String
+  password  String
+  telefono  String     @unique
+  email     String     @unique
+  rol       Rol        @relation(fields: [rolId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  rolId     Int
+  estados   Estado[]
+  servicios Servicio[]
 }
 
 model Estado {
@@ -43,18 +45,20 @@ model Estado {
 }
 
 model Servicio {
-  id            Int           @id @default(autoincrement())
-  nombre        String
-  inicio        DateTime?     @default(now())
+  id            Int          @id @default(autoincrement())
+  // nombre        String        @unique
+  inicio        DateTime?    @default(now())
   fin           DateTime?
   estado        Estado?
   direccion     String?
   envio         DateTime?
   recojo        DateTime?
-  analisis      Analisis[]
-  calibraciones Calibracion[]
-  dosimetrias   Dosimetria[]
+  analisis      Analisis?
+  calibraciones Calibracion?
+  dosimetrias   Dosimetria?
   documentos    Documento[]
+  usuario       Usuario      @relation(fields: [usuarioId], references: [id])
+  usuarioId     Int
 }
 
 model Documento {
@@ -69,7 +73,7 @@ model Documento {
 model Analisis {
   id         Int      @id @default(autoincrement())
   servicio   Servicio @relation(fields: [servicioId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  servicioId Int
+  servicioId Int      @unique
   cantidad   Int
   pais       String
   empresa    String
@@ -90,7 +94,7 @@ model Equipo {
 model Calibracion {
   id         Int      @id @default(autoincrement())
   servicio   Servicio @relation(fields: [servicioId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  servicioId Int
+  servicioId Int      @unique
   equipos    Equipo[]
 }
 
@@ -106,6 +110,6 @@ model Empleado {
 model Dosimetria {
   id         Int        @id @default(autoincrement())
   servicio   Servicio   @relation(fields: [servicioId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  servicioId Int
+  servicioId Int        @unique
   empleados  Empleado[]
 }
