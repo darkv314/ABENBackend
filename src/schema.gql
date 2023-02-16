@@ -11,6 +11,85 @@ type Estado {
   nombre: String!
 }
 
+type Analisis {
+  id: Int!
+
+  """Cantidad de la muestra en miles de toneladas"""
+  cantidad: Int!
+
+  """Pais destino del material"""
+  pais: String!
+
+  """Empresa destino del material"""
+  empresa: String!
+
+  """Direccion de almacenado"""
+  almacenado: String!
+
+  """Tipo de material"""
+  material: String!
+}
+
+type Equipo {
+  id: Int!
+  nombre: String!
+  marca: String!
+  modelo: String!
+  serie: String!
+}
+
+type Calibracion {
+  id: Int!
+  equipos: [Equipo!]!
+}
+
+type Documento {
+  id: Int!
+  nombre: String!
+  link: String!
+}
+
+type Empleado {
+  id: Int!
+  nombre: String!
+
+  """Link al documento pdf del CI"""
+  ci: String!
+
+  """Cargo en la empresa del empleado"""
+  cargo: String!
+}
+
+type Dosimetria {
+  id: Int!
+  empleados: [Empleado!]!
+}
+
+type Servicio {
+  id: Int!
+  inicio: Timestamp
+  fin: Timestamp
+
+  """Estado del servicio"""
+  estado: Estado
+  direccion: String
+
+  """Fecha de recojo del material del cliente"""
+  envio: Timestamp
+
+  """Fecha de envio del material del cliente"""
+  recojo: Timestamp
+  analisis: [Analisis!]!
+  calibraciones: [Calibracion!]!
+  dosimetrias: [Dosimetria!]!
+  documentos: [Documento!]!
+}
+
+"""
+`Date` type as integer. Type represents date and time as number of milliseconds from start of UNIX epoch.
+"""
+scalar Timestamp
+
 type Usuario {
   id: Int!
 
@@ -21,6 +100,9 @@ type Usuario {
 
   """Estados en los que esta trabajando un usuario de tipo laboratorio"""
   estados: [Estado!]!
+
+  """Servicios contratados por los usuarios de tipo cliente"""
+  servicios: [Servicio!]!
 }
 
 type Rol {
@@ -40,7 +122,7 @@ type UserRol {
   nombre: String!
 }
 
-type UsuarioLogin {
+type UsuarioAuth {
   access_token: String!
   nombre: String!
   telefono: String!
@@ -49,16 +131,27 @@ type UsuarioLogin {
 }
 
 type Query {
+  usuario(id: Int!): Usuario
+  usuarios: [Usuario!]
   rol(id: Int!): Rol
   roles: [Rol!]
 }
 
 type Mutation {
   rol(nombre: String!): Rol!
-  login(inputLogin: UsuarioInputLogin!): UsuarioLogin!
+  login(inputLogin: UsuarioInputLogin!): UsuarioAuth!
+  signup(usuario: CreateClientInput!): UsuarioAuth!
 }
 
 input UsuarioInputLogin {
   email: String!
   password: String!
+}
+
+input CreateClientInput {
+  nombre: String!
+  password: String!
+  email: String!
+  nit: String!
+  telefono: String!
 }

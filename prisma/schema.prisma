@@ -25,6 +25,7 @@ model Rol {
 
 model Usuario {
   id        Int        @id @default(autoincrement())
+  nit       String     @unique
   nombre    String
   password  String
   telefono  String     @unique
@@ -45,20 +46,21 @@ model Estado {
 }
 
 model Servicio {
-  id            Int          @id @default(autoincrement())
+  id          Int          @id @default(autoincrement())
   // nombre        String        @unique
-  inicio        DateTime?    @default(now())
-  fin           DateTime?
-  estado        Estado?
-  direccion     String?
-  envio         DateTime?
-  recojo        DateTime?
-  analisis      Analisis?
-  calibraciones Calibracion?
-  dosimetrias   Dosimetria?
-  documentos    Documento[]
-  usuario       Usuario      @relation(fields: [usuarioId], references: [id])
-  usuarioId     Int
+  inicio      DateTime?    @default(now())
+  fin         DateTime?
+  estado      Estado?
+  direccion   String?
+  envio       DateTime?
+  recojo      DateTime?
+  cantidad    Int
+  analisis    Analisis?
+  calibracion Calibracion?
+  dosimetria  Dosimetria?
+  documentos  Documento[]
+  usuario     Usuario      @relation(fields: [usuarioId], references: [id])
+  usuarioId   Int
 }
 
 model Documento {
@@ -70,15 +72,22 @@ model Documento {
   servicioId Int
 }
 
-model Analisis {
+model Muestra {
   id         Int      @id @default(autoincrement())
-  servicio   Servicio @relation(fields: [servicioId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  servicioId Int      @unique
+  analisis   Analisis @relation(fields: [analisisId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  analisisId Int      @unique
   cantidad   Int
   pais       String
   empresa    String
   almacenado String
   material   String
+}
+
+model Analisis {
+  id         Int       @id @default(autoincrement())
+  servicio   Servicio  @relation(fields: [servicioId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  servicioId Int       @unique
+  muestras   Muestra[]
 }
 
 model Equipo {

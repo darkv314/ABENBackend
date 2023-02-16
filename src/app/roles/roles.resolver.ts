@@ -46,6 +46,6 @@ export class RolesResolver {
   @ResolveField((returns) => Usuario)
   async usuarios(@Parent() rol: Rol) {
     const { id } = rol;
-    return this.usuariosService.findAll(id);
+    return this.usuariosService.findAllUsersFromRol(id);
   }
 }

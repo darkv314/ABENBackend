@@ -24,7 +24,6 @@ export class Usuario {
   @Field()
   email: string;
 
-  @IsNotEmpty()
   @Field((type) => UserRol)
   rol: UserRol;
 }

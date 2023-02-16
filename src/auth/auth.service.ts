@@ -1,9 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { UsuariosService } from 'src/app/usuarios/usuario.service';
 import { Usuario } from 'src/app/usuarios/dto/user.dto';
-import { UsuarioLogin } from 'src/app/usuarios/dto/userLogin.dto';
+import { UsuarioAuth } from 'src/app/usuarios/dto/userAuth.dto';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
+import { CreateClientInput } from 'src/app/usuarios/dto/createClient.dto';
 
 @Injectable()
 export class AuthService {
@@ -29,7 +30,12 @@ export class AuthService {
     return null;
   }
 
-  async login(usuario: Usuario): Promise<UsuarioLogin> {
+  async createCliente(usuario: CreateClientInput) {
+    const nuevoUsuario = this.usuariosService.createClient(usuario);
+    console.log(nuevoUsuario);
+  }
+
+  async login(usuario: Usuario): Promise<UsuarioAuth> {
     return {
       access_token: this.jwtService.sign({
         nombre: usuario.nombre,
