@@ -125,8 +125,7 @@ type UserRol {
 type UsuarioAuth {
   access_token: String!
   nombre: String!
-  telefono: String!
-  email: String!
+  id: Int!
   rol: UserRol!
 }
 
@@ -140,7 +139,7 @@ type Query {
 type Mutation {
   rol(nombre: String!): Rol!
   login(inputLogin: UsuarioInputLogin!): UsuarioAuth!
-  signup(usuario: CreateClientInput!): UsuarioAuth!
+  signup(cliente: CrearClienteInput!): UsuarioAuth!
 }
 
 input UsuarioInputLogin {
@@ -148,7 +147,7 @@ input UsuarioInputLogin {
   password: String!
 }
 
-input CreateClientInput {
+input CrearClienteInput {
   nombre: String!
   password: String!
   email: String!

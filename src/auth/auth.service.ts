@@ -1,10 +1,14 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  ConflictException,
+} from '@nestjs/common';
 import { UsuariosService } from 'src/app/usuarios/usuario.service';
 import { Usuario } from 'src/app/usuarios/dto/user.dto';
 import { UsuarioAuth } from 'src/app/usuarios/dto/userAuth.dto';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
-import { CreateClientInput } from 'src/app/usuarios/dto/createClient.dto';
+import { CrearClienteInput } from 'src/app/usuarios/dto/crearCliente.dto';
 
 @Injectable()
 export class AuthService {
@@ -30,9 +34,16 @@ export class AuthService {
     return null;
   }
 
-  async createCliente(usuario: CreateClientInput) {
-    const nuevoUsuario = this.usuariosService.createClient(usuario);
-    console.log(nuevoUsuario);
+  async crearCliente(cliente: CrearClienteInput) {
+    const nuevoCliente = await this.usuariosService.crearCliente({
+      ...cliente,
+      password: await bcrypt.hash(cliente.password, 12),
+    });
+    if (nuevoCliente) {
+      return this.login(nuevoCliente);
+    } else {
+      throw new ConflictException();
+    }
   }
 
   async login(usuario: Usuario): Promise<UsuarioAuth> {
@@ -43,8 +54,7 @@ export class AuthService {
         sub: usuario.id,
       }),
       nombre: usuario.nombre,
-      email: usuario.email,
-      telefono: usuario.telefono,
+      id: usuario.id,
       rol: usuario.rol,
     };
   }

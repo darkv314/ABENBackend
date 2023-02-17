@@ -4,15 +4,11 @@ import { AuthService } from './auth.service';
 import { UsuarioInputLogin } from 'src/app/usuarios/dto/userInputLogin.dto';
 import { UsuarioAuth } from 'src/app/usuarios/dto/userAuth.dto';
 import { GqlAuthGuard } from './guards/gql-auth.guard';
-import { CreateClientInput } from 'src/app/usuarios/dto/createClient.dto';
-import { UsuariosService } from 'src/app/usuarios/usuario.service';
+import { CrearClienteInput } from 'src/app/usuarios/dto/crearCliente.dto';
 
 @Resolver()
 export class AuthResolver {
-  constructor(
-    private authService: AuthService,
-    private usuariosService: UsuariosService,
-  ) {}
+  constructor(private authService: AuthService) {}
 
   @UseGuards(GqlAuthGuard)
   @Mutation((returns) => UsuarioAuth)
@@ -21,7 +17,7 @@ export class AuthResolver {
   }
 
   @Mutation((returns) => UsuarioAuth)
-  async signup(@Args('usuario') usuario: CreateClientInput) {
-    return this.authService.createCliente(usuario);
+  async signup(@Args('cliente') cliente: CrearClienteInput) {
+    return this.authService.crearCliente(cliente);
   }
 }

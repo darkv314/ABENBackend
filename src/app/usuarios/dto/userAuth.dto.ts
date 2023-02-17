@@ -16,13 +16,8 @@ export class UsuarioAuth {
   @Field()
   nombre: string;
 
-  @IsPhoneNumber()
-  @Field()
-  telefono: string;
-
-  @IsEmail()
-  @Field()
-  email: string;
+  @Field((type) => Int)
+  id: number;
 
   @Field((type) => UserRol)
   rol: UserRol;

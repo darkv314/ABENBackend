@@ -17,7 +17,6 @@ import Servicio from '../servicios/model/servicio.model';
 import { ServiciosService } from '../servicios/servicios.service';
 import Estado from '../estados/model/estado.model';
 import { EstadosService } from '../estados/estados.service';
-import { CreateClientInput } from './dto/createClient.dto';
 
 @UseGuards(JwtAuthGuard, RolGuard)
 @Resolver((of) => Usuario)
@@ -28,7 +27,7 @@ export class UsuariosResolver {
     private estadosService: EstadosService,
   ) {}
 
-  @Roles('admin')
+  // @Roles('admin')
   @Query((returns) => Usuario, { nullable: true, name: 'usuario' })
   getUsuarioById(@Args('id', { type: () => Int }) id: number) {
     return this.usuariosService.findById(id);

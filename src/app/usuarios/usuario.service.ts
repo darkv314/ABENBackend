@@ -1,19 +1,52 @@
-import { Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { CreateClientInput } from './dto/createClient.dto';
+import { CrearClienteInput } from './dto/crearCliente.dto';
+import { CrearUsuarioInput } from './dto/createUser.dto';
 
 @Injectable()
 export class UsuariosService {
   constructor(private prisma: PrismaService) {}
 
-  async createClient(usuario: CreateClientInput) {
-    const nuevoUsuario = await this.prisma.usuario.create({
-      data: {
-        ...usuario,
-        rolId: 1,
-      },
-    });
-    return nuevoUsuario;
+  async createUser(usuario: CrearUsuarioInput) {
+    try {
+      const nuevoUsuario = await this.prisma.usuario.create({
+        data: {
+          ...usuario,
+        },
+        include: {
+          rol: true,
+        },
+      });
+      return nuevoUsuario;
+    } catch (error) {
+      if (error.code === 'P2002') {
+        throw new ForbiddenException(
+          `El ${error.meta.target[0]} ya está registrado en otra cuenta`,
+        );
+      }
+    }
+  }
+
+  async crearCliente(usuario: CrearClienteInput) {
+    try {
+      const nuevoUsuario = await this.prisma.usuario.create({
+        data: {
+          ...usuario,
+          rolId: 1,
+        },
+        include: {
+          rol: true,
+        },
+      });
+      return nuevoUsuario;
+    } catch (error) {
+      // console.log(error, 'error');
+      if (error.code === 'P2002') {
+        throw new ForbiddenException(
+          `El ${error.meta.target[0]} ya está registrado en otra cuenta`,
+        );
+      }
+    }
   }
 
   findById(id: number) {

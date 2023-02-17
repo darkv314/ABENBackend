@@ -1,8 +1,8 @@
 import { IsEmail, IsPhoneNumber, MinLength } from 'class-validator';
-import { Field, InputType } from '@nestjs/graphql';
+import { Field, InputType, Int } from '@nestjs/graphql';
 
 @InputType()
-export class CreateClientInput {
+export class CrearUsuarioInput {
   @Field()
   @MinLength(4)
   nombre: string;
@@ -21,4 +21,7 @@ export class CreateClientInput {
   @Field()
   @IsPhoneNumber()
   telefono: string;
+
+  @Field((type) => Int)
+  rolId: number;
 }
