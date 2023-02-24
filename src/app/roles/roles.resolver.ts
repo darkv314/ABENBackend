@@ -43,6 +43,12 @@ export class RolesResolver {
     return this.rolesService.createRole(nombre);
   }
 
+  @Roles('admin')
+  @Mutation((returns) => Rol, { name: 'rol' })
+  async updateRol(@Args('id') id: number) {
+    return this.rolesService.updateRole(id);
+  }
+
   @ResolveField((returns) => Usuario)
   async usuarios(@Parent() rol: Rol) {
     const { id } = rol;

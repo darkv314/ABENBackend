@@ -16,6 +16,9 @@ export default class Servicio {
   @Field((type) => GraphQLTimestamp, { nullable: true })
   fin: number;
 
+  @Field((type) => Int)
+  cantidad: number;
+
   @Field((type) => Estado, {
     nullable: true,
     description: 'Estado del servicio',
@@ -37,14 +40,14 @@ export default class Servicio {
   })
   recojo: number;
 
-  @Field((type) => [Analisis])
-  analisis: Analisis[];
+  @Field((type) => Analisis, { nullable: true })
+  analisis: Analisis;
 
-  @Field((type) => [Calibracion])
-  calibraciones: Calibracion[];
+  @Field((type) => Calibracion, { nullable: true })
+  calibraciones: Calibracion;
 
-  @Field((type) => [Dosimetria])
-  dosimetrias: Dosimetria[];
+  @Field((type) => Dosimetria, { nullable: true })
+  dosimetrias: Dosimetria;
 
   @Field((type) => [Documento])
   documentos: Documento[];

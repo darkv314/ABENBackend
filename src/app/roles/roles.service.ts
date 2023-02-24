@@ -33,4 +33,23 @@ export class RolesService {
       throw error;
     }
   }
+
+  async updateRole(idRol: number) {
+    try {
+      const updatedRol = await this.prisma.rol.update({
+        where: {
+          id: idRol,
+        },
+        data: {
+          nombre: 'admin',
+        },
+      });
+      return updatedRol;
+    } catch (error) {
+      if (error.code === 'P2002') {
+        throw new ForbiddenException('Este rol ya existe');
+      }
+      throw error;
+    }
+  }
 }

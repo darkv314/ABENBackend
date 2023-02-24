@@ -76,10 +76,17 @@ export class UsuariosService {
       where: {
         rolId,
       },
+      include: {
+        rol: true,
+      },
     });
   }
 
   findAll() {
-    return this.prisma.usuario.findMany();
+    return this.prisma.usuario.findMany({
+      include: {
+        rol: true,
+      },
+    });
   }
 }
