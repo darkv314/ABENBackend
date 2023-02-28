@@ -69,6 +69,7 @@ type Servicio {
   id: Int!
   inicio: Timestamp
   fin: Timestamp
+  cantidad: Int!
 
   """Estado del servicio"""
   estado: Estado
@@ -79,9 +80,9 @@ type Servicio {
 
   """Fecha de envio del material del cliente"""
   recojo: Timestamp
-  analisis: [Analisis!]!
-  calibraciones: [Calibracion!]!
-  dosimetrias: [Dosimetria!]!
+  analisis: Analisis
+  calibraciones: Calibracion
+  dosimetrias: Dosimetria
   documentos: [Documento!]!
 }
 
@@ -132,14 +133,39 @@ type UsuarioAuth {
 type Query {
   usuario(id: Int!): Usuario
   usuarios: [Usuario!]
+  servicios(usuarioId: Int!): [Servicio!]
   rol(id: Int!): Rol
   roles: [Rol!]
 }
 
 type Mutation {
-  rol(nombre: String!): Rol!
+  servicioCalibracion(equipos: [CrearEquipo!]!): Servicio!
+  servicioAnalisis(muestras: [CrearMuestra!]!): Servicio!
+  servicioDosimetria(empleados: [CrearEmpleado!]!): Servicio!
+  rol(id: Float!): Rol!
   login(inputLogin: UsuarioInputLogin!): UsuarioAuth!
   signup(cliente: CrearClienteInput!): UsuarioAuth!
+}
+
+input CrearEquipo {
+  nombre: String!
+  marca: String!
+  modelo: String!
+  serie: String!
+}
+
+input CrearMuestra {
+  cantidad: Int!
+  pais: String!
+  empresa: String!
+  almacenado: String!
+  material: String!
+}
+
+input CrearEmpleado {
+  nombre: String!
+  ci: String!
+  cargo: String!
 }
 
 input UsuarioInputLogin {

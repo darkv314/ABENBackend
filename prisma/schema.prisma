@@ -26,7 +26,7 @@ model Rol {
 model Usuario {
   id        Int        @id @default(autoincrement())
   nit       String     @unique
-  nombre    String
+  nombre    String     @unique
   password  String
   telefono  String     @unique
   email     String     @unique
@@ -47,8 +47,8 @@ model Estado {
 
 model Servicio {
   id          Int          @id @default(autoincrement())
-  // nombre        String        @unique
-  inicio      DateTime?    @default(now())
+  nombre      String
+  inicio      DateTime     @default(now())
   fin         DateTime?
   estado      Estado?
   direccion   String?
