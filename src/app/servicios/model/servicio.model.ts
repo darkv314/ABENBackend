@@ -10,6 +10,9 @@ export default class Servicio {
   @Field((type) => Int)
   id: number;
 
+  @Field()
+  nombre: string;
+
   @Field((type) => GraphQLTimestamp, { nullable: true })
   inicio: number;
 
@@ -49,6 +52,6 @@ export default class Servicio {
   @Field((type) => Dosimetria, { nullable: true })
   dosimetrias: Dosimetria;
 
-  @Field((type) => [Documento])
+  @Field((type) => [Documento], { nullable: true })
   documentos: Documento[];
 }

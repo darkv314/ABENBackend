@@ -67,6 +67,7 @@ type Dosimetria {
 
 type Servicio {
   id: Int!
+  nombre: String!
   inicio: Timestamp
   fin: Timestamp
   cantidad: Int!
@@ -83,7 +84,7 @@ type Servicio {
   analisis: Analisis
   calibraciones: Calibracion
   dosimetrias: Dosimetria
-  documentos: [Documento!]!
+  documentos: [Documento!]
 }
 
 """
