@@ -21,4 +21,13 @@ export class UsuarioAuth {
 
   @Field((type) => UserRol)
   rol: UserRol;
+
+  @Field()
+  email: string;
+
+  @Field()
+  nit: string;
+
+  @Field()
+  telefono: string;
 }

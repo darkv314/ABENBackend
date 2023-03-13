@@ -129,6 +129,9 @@ type UsuarioAuth {
   nombre: String!
   id: Int!
   rol: UserRol!
+  email: String!
+  nit: String!
+  telefono: String!
 }
 
 type Query {

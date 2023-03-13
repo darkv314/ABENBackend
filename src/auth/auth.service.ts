@@ -56,6 +56,9 @@ export class AuthService {
       nombre: usuario.nombre,
       id: usuario.id,
       rol: usuario.rol,
+      email: usuario.email,
+      nit: usuario.nit,
+      telefono: usuario.telefono,
     };
   }
 }

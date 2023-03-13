@@ -26,4 +26,7 @@ export class Usuario {
 
   @Field((type) => UserRol)
   rol: UserRol;
+
+  @Field()
+  nit: string;
 }
