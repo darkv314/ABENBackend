@@ -13,6 +13,7 @@ export class AuthResolver {
   @UseGuards(GqlAuthGuard)
   @Mutation((returns) => UsuarioAuth)
   login(@Args('inputLogin') inputLogin: UsuarioInputLogin, @Context() context) {
+    // console.log('asñdknalskdn');
     return this.authService.login(context.user);
   }
 

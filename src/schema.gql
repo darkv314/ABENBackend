@@ -143,12 +143,23 @@ type Query {
 }
 
 type Mutation {
+  createUsuario(usuario: CrearUsuarioInput!): Usuario!
   servicioCalibracion(equipos: [CrearEquipo!]!): Servicio!
   servicioAnalisis(muestras: [CrearMuestra!]!): Servicio!
   servicioDosimetria(empleados: [CrearEmpleado!]!): Servicio!
+  createRol(nombre: String!): Rol!
   rol(id: Float!): Rol!
   login(inputLogin: UsuarioInputLogin!): UsuarioAuth!
   signup(cliente: CrearClienteInput!): UsuarioAuth!
+}
+
+input CrearUsuarioInput {
+  nombre: String!
+  password: String!
+  email: String!
+  nit: String!
+  telefono: String!
+  rolId: Int!
 }
 
 input CrearEquipo {

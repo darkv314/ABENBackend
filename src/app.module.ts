@@ -16,6 +16,7 @@ import { EmpleadosModule } from './app/empleados/empleados.module';
 import { DosimetriasModule } from './app/dosimetrias/dosimetrias.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
+import { TestModule } from './app/test/test.module';
 
 @Module({
   imports: [
@@ -24,9 +25,13 @@ import { ConfigModule } from '@nestjs/config';
         dateScalarMode: 'timestamp',
       },
       driver: ApolloDriver,
+      subscriptions: {
+        'graphql-ws': true,
+      },
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
     }),
     ConfigModule.forRoot(),
+    TestModule,
     PrismaModule,
     UsuariosModule,
     RolesModule,

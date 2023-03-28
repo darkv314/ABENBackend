@@ -38,7 +38,7 @@ export class RolesResolver {
   }
 
   @Roles('admin')
-  @Mutation((returns) => Rol, { name: 'rol' })
+  @Mutation((returns) => Rol, { name: 'createRol' })
   async createRol(@Args('nombre') nombre: string) {
     return this.rolesService.createRole(nombre);
   }

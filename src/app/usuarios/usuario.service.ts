@@ -2,6 +2,7 @@ import { ForbiddenException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CrearClienteInput } from './dto/crearCliente.dto';
 import { CrearUsuarioInput } from './dto/createUser.dto';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsuariosService {
@@ -12,6 +13,7 @@ export class UsuariosService {
       const nuevoUsuario = await this.prisma.usuario.create({
         data: {
           ...usuario,
+          password: await bcrypt.hash(usuario.password, 12),
         },
         include: {
           rol: true,

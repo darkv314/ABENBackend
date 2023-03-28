@@ -17,8 +17,9 @@ import Servicio from '../servicios/model/servicio.model';
 import { ServiciosService } from '../servicios/servicios.service';
 import Estado from '../estados/model/estado.model';
 import { EstadosService } from '../estados/estados.service';
+import { CrearUsuarioInput } from './dto/createUser.dto';
 
-@UseGuards(JwtAuthGuard, RolGuard)
+// @UseGuards(JwtAuthGuard, RolGuard)
 @Resolver((of) => Usuario)
 export class UsuariosResolver {
   constructor(
@@ -37,6 +38,15 @@ export class UsuariosResolver {
   @Query((returns) => [Usuario], { nullable: true, name: 'usuarios' })
   getUsuarios() {
     return this.usuariosService.findAll();
+  }
+
+  // @Roles('admin')
+  @Mutation((returns) => Usuario, { name: 'createUsuario' })
+  createUsuario(
+    @Args('usuario', { type: () => CrearUsuarioInput })
+    usuario: CrearUsuarioInput,
+  ) {
+    return this.usuariosService.createUser(usuario);
   }
 
   @ResolveField((returns) => Servicio)
