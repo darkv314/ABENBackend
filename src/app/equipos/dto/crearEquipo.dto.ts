@@ -6,7 +6,7 @@ export class CrearEquipo {
   nombre: string;
 
   @Field()
-  marca: string;
+  fabricante: string;
 
   @Field()
   modelo: string;

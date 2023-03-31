@@ -24,6 +24,7 @@ import { TestModule } from './app/test/test.module';
       buildSchemaOptions: {
         dateScalarMode: 'timestamp',
       },
+      // playground: false,
       driver: ApolloDriver,
       subscriptions: {
         'graphql-ws': true,

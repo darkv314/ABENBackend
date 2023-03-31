@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { CrearEmpleado } from '../empleados/dto/crearEmpleado.dto';
 import { CrearEquipo } from '../equipos/dto/crearEquipo.dto';
+import { CrearMuestra } from '../muestras/dto/crearMuestra.dto';
 import { CrearServicioInput } from './dto/crearServicio.dto';
 
 @Injectable()
@@ -32,7 +34,7 @@ export class ServiciosService {
     });
   }
 
-  async crearAnalisis(muestras, usuario) {
+  async crearAnalisis(muestras: CrearMuestra[], usuario) {
     return this.prisma.servicio.create({
       data: {
         nombre: 'Analisis',
@@ -49,7 +51,7 @@ export class ServiciosService {
     });
   }
 
-  async crearDosimetria(empleados, usuario) {
+  async crearDosimetria(empleados: CrearEmpleado[], usuario) {
     return this.prisma.servicio.create({
       data: {
         nombre: 'Dosimetria',
@@ -57,13 +59,22 @@ export class ServiciosService {
         cantidad: empleados.length,
         dosimetria: {
           create: {
-            empleados: empleados,
+            actividad: 'Dosimetria',
+            empleados: {
+              create: empleados,
+            },
           },
         },
       },
       include: {
         dosimetria: true,
       },
+    });
+  }
+
+  async crearServicios(servicios) {
+    return this.prisma.servicio.createMany({
+      data: servicios,
     });
   }
 }

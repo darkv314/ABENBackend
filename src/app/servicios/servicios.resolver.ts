@@ -62,6 +62,15 @@ export class ServiciosResolver {
     return this.serviciosService.crearDosimetria(empleados, context.req.user);
   }
 
+  // @Roles('admin', 'cliente')
+  // @Mutation((returns) => Int)
+  // async crearServicios(
+  //   @Args('servicios', { type: () => [CrearServiciosInput] })
+  //   servicios: CrearServiciosInput[],
+  // ) {
+  //   return this.serviciosService.crearServicios(servicios);
+  // }
+
   // @ResolveField((returns) => [CrearEmpleado], { nullable: true })
   // async empleados(@Parent() servicio: Servicio) {
   //   const { id } = servicio;

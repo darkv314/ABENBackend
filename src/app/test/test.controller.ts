@@ -4,7 +4,7 @@ import { Controller, Get } from '@nestjs/common';
 export class TestController {
   @Get()
   getTest() {
-    console.log('a');
+    // console.log('a');
     return 'alol';
   }
 }

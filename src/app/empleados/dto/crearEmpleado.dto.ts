@@ -10,4 +10,7 @@ export class CrearEmpleado {
 
   @Field()
   cargo: string;
+
+  @Field()
+  expedido: string;
 }

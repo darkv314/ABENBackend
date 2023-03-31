@@ -164,7 +164,7 @@ input CrearUsuarioInput {
 
 input CrearEquipo {
   nombre: String!
-  marca: String!
+  fabricante: String!
   modelo: String!
   serie: String!
 }
@@ -181,6 +181,7 @@ input CrearEmpleado {
   nombre: String!
   ci: String!
   cargo: String!
+  expedido: String!
 }
 
 input UsuarioInputLogin {

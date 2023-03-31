@@ -93,7 +93,7 @@ model Analisis {
 model Equipo {
   id            Int         @id @default(autoincrement())
   nombre        String
-  marca         String
+  fabricante    String
   modelo        String
   serie         String
   calibracion   Calibracion @relation(fields: [calibracionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
@@ -111,6 +111,7 @@ model Empleado {
   id           Int        @id @default(autoincrement())
   nombre       String
   ci           String
+  expedido     String
   cargo        String
   dosimetria   Dosimetria @relation(fields: [dosimetriaId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   dosimetriaId Int
@@ -120,5 +121,6 @@ model Dosimetria {
   id         Int        @id @default(autoincrement())
   servicio   Servicio   @relation(fields: [servicioId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   servicioId Int        @unique
+  actividad  String
   empleados  Empleado[]
 }
