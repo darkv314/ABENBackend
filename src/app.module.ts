@@ -17,6 +17,8 @@ import { DosimetriasModule } from './app/dosimetrias/dosimetrias.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { TestModule } from './app/test/test.module';
+import { NotificacionDocumentosModule } from './app/notificacion-documentos/notificacion-documentos.module';
+import { NotificacionPagosModule } from './app/notificacion-pagos/notificacion-pagos.module';
 
 @Module({
   imports: [
@@ -32,6 +34,8 @@ import { TestModule } from './app/test/test.module';
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
     }),
     ConfigModule.forRoot(),
+    NotificacionDocumentosModule,
+    NotificacionPagosModule,
     TestModule,
     PrismaModule,
     UsuariosModule,
