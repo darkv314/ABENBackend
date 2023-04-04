@@ -19,7 +19,7 @@ import { CrearMuestra } from '../muestras/dto/crearMuestra.dto';
 import { CrearServicioInput, Response } from './dto/crearServicio.dto';
 import Servicio from './model/servicio.model';
 import { ServiciosService } from './servicios.service';
-import { CrearServiciosInput } from './dto/crearServicios..dto';
+import { CrearServiciosInput } from './dto/crearServicios.dto';
 // import { CrearServiciosInput } from './dto/crearServicios..dto';
 
 @UseGuards(JwtAuthGuard, RolGuard)
