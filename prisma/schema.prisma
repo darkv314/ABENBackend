@@ -118,9 +118,20 @@ model Empleado {
 }
 
 model Dosimetria {
-  id         Int        @id @default(autoincrement())
-  servicio   Servicio   @relation(fields: [servicioId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  servicioId Int        @unique
-  actividad  String
-  empleados  Empleado[]
+  id           Int           @id @default(autoincrement())
+  servicio     Servicio      @relation(fields: [servicioId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  servicioId   Int           @unique
+  actividad    String
+  courrier     Boolean
+  empleados    Empleado[]
+  InfoCourrier InfoCourrier?
+}
+
+model InfoCourrier {
+  id           Int        @id @default(autoincrement())
+  dosimetria   Dosimetria @relation(fields: [dosimetriaId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  dosimetriaId Int        @unique
+  responsable  String
+  telefono     String
+  direccion    String
 }

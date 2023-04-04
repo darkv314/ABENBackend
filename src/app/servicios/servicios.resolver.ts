@@ -16,9 +16,11 @@ import { CrearEmpleado } from '../empleados/dto/crearEmpleado.dto';
 import { CrearEquipo } from '../equipos/dto/crearEquipo.dto';
 import Equipo from '../equipos/model/equipo.model';
 import { CrearMuestra } from '../muestras/dto/crearMuestra.dto';
-import { CrearServicioInput } from './dto/crearServicio.dto';
+import { CrearServicioInput, Response } from './dto/crearServicio.dto';
 import Servicio from './model/servicio.model';
 import { ServiciosService } from './servicios.service';
+import { CrearServiciosInput } from './dto/crearServicios..dto';
+// import { CrearServiciosInput } from './dto/crearServicios..dto';
 
 @UseGuards(JwtAuthGuard, RolGuard)
 @Resolver((of) => Servicio)
@@ -52,24 +54,13 @@ export class ServiciosResolver {
   }
 
   @Roles('admin', 'cliente')
-  @Mutation((returns) => Servicio, { name: 'servicioDosimetria' })
-  async crearServicioDosimetria(
-    @Args('empleados', { type: () => [CrearEmpleado] })
-    empleados: CrearEmpleado[],
-    @Context() context,
+  @Mutation((returns) => Response, { name: 'crearServicios' })
+  async crearServicios(
+    @Args('servicios', { type: () => CrearServiciosInput })
+    servicios: CrearServiciosInput,
   ) {
-    console.log(context.req.user);
-    return this.serviciosService.crearDosimetria(empleados, context.req.user);
+    return this.serviciosService.crearServicios(servicios);
   }
-
-  // @Roles('admin', 'cliente')
-  // @Mutation((returns) => Int)
-  // async crearServicios(
-  //   @Args('servicios', { type: () => [CrearServiciosInput] })
-  //   servicios: CrearServiciosInput[],
-  // ) {
-  //   return this.serviciosService.crearServicios(servicios);
-  // }
 
   // @ResolveField((returns) => [CrearEmpleado], { nullable: true })
   // async empleados(@Parent() servicio: Servicio) {

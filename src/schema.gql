@@ -11,6 +11,10 @@ type Estado {
   nombre: String!
 }
 
+type Response {
+  message: String!
+}
+
 type Analisis {
   id: Int!
 
@@ -146,7 +150,7 @@ type Mutation {
   createUsuario(usuario: CrearUsuarioInput!): Usuario!
   servicioCalibracion(equipos: [CrearEquipo!]!): Servicio!
   servicioAnalisis(muestras: [CrearMuestra!]!): Servicio!
-  servicioDosimetria(empleados: [CrearEmpleado!]!): Servicio!
+  crearServicios(servicios: CrearServiciosInput!): Response!
   createRol(nombre: String!): Rol!
   rol(id: Float!): Rol!
   login(inputLogin: UsuarioInputLogin!): UsuarioAuth!
@@ -175,6 +179,39 @@ input CrearMuestra {
   empresa: String!
   almacenado: String!
   material: String!
+}
+
+input CrearServiciosInput {
+  nombre: String!
+  precio: Int!
+  info: Info
+  items: [Item!]
+}
+
+input Info {
+  generalInfo: generalInfo
+  dosimetriaInfo: dosimetrosInfo
+}
+
+input generalInfo {
+  nombre: String
+  direccion: String!
+  email: String!
+  nit: String!
+}
+
+input dosimetrosInfo {
+  nombre: String!
+  direccion: String!
+  email: String!
+  nit: String!
+  actividad: String!
+}
+
+input Item {
+  empleado: CrearEmpleado
+  equipo: CrearEquipo
+  muestra: CrearMuestra
 }
 
 input CrearEmpleado {

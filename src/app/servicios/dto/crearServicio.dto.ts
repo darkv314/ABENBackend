@@ -1,5 +1,5 @@
 import { IsEmail, IsPhoneNumber, MinLength } from 'class-validator';
-import { Field, InputType, Int } from '@nestjs/graphql';
+import { Field, InputType, Int, ObjectType } from '@nestjs/graphql';
 
 @InputType()
 export class CrearServicioInput {
@@ -11,4 +11,10 @@ export class CrearServicioInput {
 
   @Field((type) => Int)
   usuarioId: number;
+}
+
+@ObjectType()
+export class Response {
+  @Field()
+  message: string;
 }

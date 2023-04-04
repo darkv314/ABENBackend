@@ -1,6 +1,7 @@
-import { Field, InputType, Int } from '@nestjs/graphql';
+import { Field, InputType, Int, ObjectType } from '@nestjs/graphql';
 
 @InputType()
+// @ObjectType()
 export class CrearEmpleado {
   @Field()
   nombre: string;

@@ -73,6 +73,7 @@ export class ServiciosService {
   }
 
   async crearServicios(servicios) {
+    console.log(servicios);
     return this.prisma.servicio.createMany({
       data: servicios,
     });
