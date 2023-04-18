@@ -11,40 +11,30 @@ type Estado {
   nombre: String!
 }
 
-type Response {
-  message: String!
+type Muestra {
+  id: Int!
+  tipo: String!
+  procedencia: String!
+  identificacion: String!
+  coordenadas: String
 }
 
 type Analisis {
   id: Int!
-
-  """Cantidad de la muestra en miles de toneladas"""
-  cantidad: Int!
-
-  """Pais destino del material"""
-  pais: String!
-
-  """Empresa destino del material"""
-  empresa: String!
-
-  """Direccion de almacenado"""
-  almacenado: String!
-
-  """Tipo de material"""
-  material: String!
+  muestras: [Muestra!]
 }
 
 type Equipo {
   id: Int!
   nombre: String!
-  marca: String!
+  fabricante: String!
   modelo: String!
   serie: String!
 }
 
 type Calibracion {
   id: Int!
-  equipos: [Equipo!]!
+  equipos: [Equipo!]
 }
 
 type Documento {
@@ -56,38 +46,41 @@ type Documento {
 type Empleado {
   id: Int!
   nombre: String!
-
-  """Link al documento pdf del CI"""
   ci: String!
-
-  """Cargo en la empresa del empleado"""
+  expedido: String!
   cargo: String!
+}
+
+type InfoCourrier {
+  id: Int!
+  responsable: String!
+  telefono: String!
+  direccion: String!
 }
 
 type Dosimetria {
   id: Int!
-  empleados: [Empleado!]!
+  actividad: String!
+  infoCourrier: InfoCourrier
+  empleados: [Empleado!]
 }
 
 type Servicio {
   id: Int!
   nombre: String!
+  empresa: String!
   inicio: Timestamp
   fin: Timestamp
   cantidad: Int!
 
   """Estado del servicio"""
   estado: Estado
-  direccion: String
-
-  """Fecha de recojo del material del cliente"""
-  envio: Timestamp
-
-  """Fecha de envio del material del cliente"""
-  recojo: Timestamp
-  analisis: Analisis
-  calibraciones: Calibracion
-  dosimetrias: Dosimetria
+  nit: String!
+  telefono: String!
+  email: String!
+  analisis: [Analisis!]
+  calibraciones: [Calibracion!]
+  dosimetrias: [Dosimetria!]
   documentos: [Documento!]
 }
 
@@ -138,6 +131,88 @@ type UsuarioAuth {
   telefono: String!
 }
 
+input EstadoInput {
+  id: Int!
+
+  """
+  Nombre del estado, indica en que parte del proceso se encuentra un servicio
+  """
+  nombre: String!
+}
+
+input MuestraInput {
+  id: Int!
+  tipo: String!
+  procedencia: String!
+  identificacion: String!
+  coordenadas: String
+}
+
+input AnalisisInput {
+  id: Int!
+  muestras: [MuestraInput!]
+}
+
+input EquipoInput {
+  id: Int!
+  nombre: String!
+  fabricante: String!
+  modelo: String!
+  serie: String!
+}
+
+input CalibracionInput {
+  id: Int!
+  equipos: [EquipoInput!]
+}
+
+input DocumentoInput {
+  id: Int!
+  nombre: String!
+  link: String!
+}
+
+input EmpleadoInput {
+  id: Int!
+  nombre: String!
+  ci: String!
+  expedido: String!
+  cargo: String!
+}
+
+input InfoCourrierInput {
+  id: Int!
+  responsable: String!
+  telefono: String!
+  direccion: String!
+}
+
+input DosimetriaInput {
+  id: Int!
+  actividad: String!
+  infoCourrier: InfoCourrierInput
+  empleados: [EmpleadoInput!]
+}
+
+input ServicioInput {
+  id: Int!
+  nombre: String!
+  empresa: String!
+  inicio: Timestamp
+  fin: Timestamp
+  cantidad: Int!
+
+  """Estado del servicio"""
+  estado: EstadoInput
+  nit: String!
+  telefono: String!
+  email: String!
+  analisis: [AnalisisInput!]
+  calibraciones: [CalibracionInput!]
+  dosimetrias: [DosimetriaInput!]
+  documentos: [DocumentoInput!]
+}
+
 type Query {
   usuario(id: Int!): Usuario
   usuarios: [Usuario!]
@@ -148,11 +223,8 @@ type Query {
 
 type Mutation {
   createUsuario(usuario: CrearUsuarioInput!): Usuario!
-  servicioCalibracion(equipos: [CrearEquipo!]!): Servicio!
-  servicioAnalisis(muestras: [CrearMuestra!]!): Servicio!
-  crearServicios(servicios: CrearServiciosInput!): Response!
   createRol(nombre: String!): Rol!
-  rol(id: Float!): Rol!
+  updateRol(id: Float!): Rol!
   login(inputLogin: UsuarioInputLogin!): UsuarioAuth!
   signup(cliente: CrearClienteInput!): UsuarioAuth!
 }
@@ -164,61 +236,6 @@ input CrearUsuarioInput {
   nit: String!
   telefono: String!
   rolId: Int!
-}
-
-input CrearEquipo {
-  nombre: String!
-  fabricante: String!
-  modelo: String!
-  serie: String!
-}
-
-input CrearMuestra {
-  cantidad: Int!
-  pais: String!
-  empresa: String!
-  almacenado: String!
-  material: String!
-}
-
-input CrearServiciosInput {
-  nombre: String!
-  precio: Int!
-  info: Info
-  items: [Item!]
-}
-
-input Info {
-  generalInfo: generalInfo
-  dosimetriaInfo: dosimetrosInfo
-}
-
-input generalInfo {
-  nombre: String
-  direccion: String!
-  email: String!
-  nit: String!
-}
-
-input dosimetrosInfo {
-  nombre: String!
-  direccion: String!
-  email: String!
-  nit: String!
-  actividad: String!
-}
-
-input Item {
-  empleado: CrearEmpleado
-  equipo: CrearEquipo
-  muestra: CrearMuestra
-}
-
-input CrearEmpleado {
-  nombre: String!
-  ci: String!
-  cargo: String!
-  expedido: String!
 }
 
 input UsuarioInputLogin {

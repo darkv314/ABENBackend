@@ -1,8 +1,9 @@
-import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Field, InputType, Int, ObjectType } from '@nestjs/graphql';
 import Empleado from 'src/app/empleado/model/empleado.model';
 import InfoCourrier from 'src/app/infoCourrier/model/infoCourrier.model';
 
 @ObjectType()
+@InputType('DosimetriaInput')
 export default class Dosimetria {
   @Field((type) => Int)
   id: number;

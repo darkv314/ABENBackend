@@ -1,6 +1,7 @@
-import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Field, Int, ObjectType, InputType } from '@nestjs/graphql';
 
 @ObjectType()
+@InputType('InfoCourrierInput')
 export default class InfoCourrier {
   @Field((type) => Int)
   id: number;

@@ -12,10 +12,8 @@ import {
 import { Roles } from 'src/auth/decorators/rol.decorator';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { RolGuard } from 'src/auth/guards/rol.guard';
-import { CrearServicioInput, Response } from './dto/crearServicio.dto';
 import Servicio from './model/servicio.model';
 import { ServiciosService } from './servicios.service';
-import { CrearServiciosInput } from './dto/crearServicios.dto';
 // import { CrearServiciosInput } from './dto/crearServicios..dto';
 
 @UseGuards(JwtAuthGuard, RolGuard)
@@ -49,14 +47,14 @@ export class ServiciosResolver {
   //   return this.serviciosService.crearAnalisis(muestras, context.req.user);
   // }
 
-  @Roles('admin', 'cliente')
-  @Mutation((returns) => Response, { name: 'crearServicios' })
-  async crearServicios(
-    @Args('servicios', { type: () => CrearServiciosInput })
-    servicios: CrearServiciosInput,
-  ) {
-    return this.serviciosService.crearServicios(servicios);
-  }
+  // @Roles('admin', 'cliente')
+  // @Mutation((returns) => Response, { name: 'crearServicios' })
+  // async crearServicios(
+  //   @Args('servicios', { type: () => CrearServiciosInput })
+  //   servicios: CrearServiciosInput,
+  // ) {
+  //   return this.serviciosService.crearServicios(servicios);
+  // }
 
   // @ResolveField((returns) => [CrearEmpleado], { nullable: true })
   // async empleados(@Parent() servicio: Servicio) {

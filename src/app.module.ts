@@ -8,15 +8,9 @@ import { join } from 'path';
 import { RolesModule } from './app/roles/roles.module';
 import { EstadosModule } from './app/estados/estados.module';
 import { ServiciosModule } from './app/servicios/servicios.module';
-import { DocumentosModule } from './app/documentos/documentos.module';
-import { AnalisisModule } from './app/analisis/analisis.module';
-import { EquiposModule } from './app/equipos/equipos.module';
-import { CalibracionesModule } from './app/calibraciones/calibraciones.module';
-import { EmpleadosModule } from './app/empleados/empleados.module';
-import { DosimetriasModule } from './app/dosimetrias/dosimetrias.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
-import { TestModule } from './app/test/test.module';
+// import { TestModule } from './app/test/test.module';
 import { NotificacionDocumentosModule } from './app/notificacion-documentos/notificacion-documentos.module';
 import { NotificacionPagosModule } from './app/notificacion-pagos/notificacion-pagos.module';
 
@@ -36,18 +30,11 @@ import { NotificacionPagosModule } from './app/notificacion-pagos/notificacion-p
     ConfigModule.forRoot(),
     NotificacionDocumentosModule,
     NotificacionPagosModule,
-    TestModule,
     PrismaModule,
     UsuariosModule,
     RolesModule,
     EstadosModule,
     ServiciosModule,
-    DocumentosModule,
-    AnalisisModule,
-    EquiposModule,
-    CalibracionesModule,
-    EmpleadosModule,
-    DosimetriasModule,
     AuthModule,
   ],
 })

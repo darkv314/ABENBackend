@@ -44,7 +44,7 @@ export class RolesResolver {
   }
 
   @Roles('admin')
-  @Mutation((returns) => Rol, { name: 'rol' })
+  @Mutation((returns) => Rol, { name: 'updateRol' })
   async updateRol(@Args('id') id: number) {
     return this.rolesService.updateRole(id);
   }
