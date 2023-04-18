@@ -60,6 +60,7 @@ export class ServiciosService {
         dosimetria: {
           create: {
             actividad: 'Dosimetria',
+            courrier: true,
             empleados: {
               create: empleados,
             },
