@@ -48,12 +48,13 @@ model Estado {
 model Servicio {
   id          Int          @id @default(autoincrement())
   nombre      String
+  empresa     String
   inicio      DateTime     @default(now())
   fin         DateTime?
+  email       String
+  telefono    String
+  nit         String
   estado      Estado?
-  direccion   String?
-  envio       DateTime?
-  recojo      DateTime?
   cantidad    Int
   analisis    Analisis?
   calibracion Calibracion?
@@ -64,23 +65,21 @@ model Servicio {
 }
 
 model Documento {
-  id     Int    @id @default(autoincrement())
-  nombre String
-  link   String @unique
-
+  id         Int      @id @default(autoincrement())
+  nombre     String
+  link       String   @unique
   servicio   Servicio @relation(fields: [servicioId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   servicioId Int
 }
 
 model Muestra {
-  id         Int      @id @default(autoincrement())
-  analisis   Analisis @relation(fields: [analisisId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  analisisId Int      @unique
-  cantidad   Int
-  pais       String
-  empresa    String
-  almacenado String
-  material   String
+  id             Int      @id @default(autoincrement())
+  analisis       Analisis @relation(fields: [analisisId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  analisisId     Int      @unique
+  tipo           String
+  procedencia    String
+  identificacion String
+  coordenadas    String?
 }
 
 model Analisis {
@@ -122,7 +121,6 @@ model Dosimetria {
   servicio     Servicio      @relation(fields: [servicioId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   servicioId   Int           @unique
   actividad    String
-  courrier     Boolean
   empleados    Empleado[]
   InfoCourrier InfoCourrier?
 }

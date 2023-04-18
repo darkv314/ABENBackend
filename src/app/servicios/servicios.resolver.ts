@@ -12,10 +12,6 @@ import {
 import { Roles } from 'src/auth/decorators/rol.decorator';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { RolGuard } from 'src/auth/guards/rol.guard';
-import { CrearEmpleado } from '../empleados/dto/crearEmpleado.dto';
-import { CrearEquipo } from '../equipos/dto/crearEquipo.dto';
-import Equipo from '../equipos/model/equipo.model';
-import { CrearMuestra } from '../muestras/dto/crearMuestra.dto';
 import { CrearServicioInput, Response } from './dto/crearServicio.dto';
 import Servicio from './model/servicio.model';
 import { ServiciosService } from './servicios.service';
@@ -33,25 +29,25 @@ export class ServiciosResolver {
     return this.serviciosService.findAllUserServices(usuarioId);
   }
 
-  @Roles('admin', 'cliente')
-  @Mutation((returns) => Servicio, { name: 'servicioCalibracion' })
-  async crearServicioCalibracion(
-    @Args('equipos', { type: () => [CrearEquipo] }) equipos: CrearEquipo[],
-    @Context() context,
-  ) {
-    console.log(context.req.user);
-    return this.serviciosService.crearCalibracion(equipos, context.req.user);
-  }
+  // @Roles('admin', 'cliente')
+  // @Mutation((returns) => Servicio, { name: 'servicioCalibracion' })
+  // async crearServicioCalibracion(
+  //   @Args('equipos', { type: () => [CrearEquipo] }) equipos: CrearEquipo[],
+  //   @Context() context,
+  // ) {
+  //   console.log(context.req.user);
+  //   return this.serviciosService.crearCalibracion(equipos, context.req.user);
+  // }
 
-  @Roles('admin', 'cliente')
-  @Mutation((returns) => Servicio, { name: 'servicioAnalisis' })
-  async crearServicioAnalisis(
-    @Args('muestras', { type: () => [CrearMuestra] }) muestras: CrearMuestra[],
-    @Context() context,
-  ) {
-    console.log(context.req.user);
-    return this.serviciosService.crearAnalisis(muestras, context.req.user);
-  }
+  // @Roles('admin', 'cliente')
+  // @Mutation((returns) => Servicio, { name: 'servicioAnalisis' })
+  // async crearServicioAnalisis(
+  //   @Args('muestras', { type: () => [CrearMuestra] }) muestras: CrearMuestra[],
+  //   @Context() context,
+  // ) {
+  //   console.log(context.req.user);
+  //   return this.serviciosService.crearAnalisis(muestras, context.req.user);
+  // }
 
   @Roles('admin', 'cliente')
   @Mutation((returns) => Response, { name: 'crearServicios' })

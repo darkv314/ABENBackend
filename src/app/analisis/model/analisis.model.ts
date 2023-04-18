@@ -1,24 +1,14 @@
 import { Field, Int, ObjectType, GraphQLTimestamp } from '@nestjs/graphql';
+import Muestra from 'src/app/muestras/model/muestra.model';
 
 @ObjectType()
 export default class Analisis {
   @Field((type) => Int)
   id: number;
 
-  @Field((type) => Int, {
-    description: 'Cantidad de la muestra en miles de toneladas',
-  })
-  cantidad: number;
+  @Field()
+  nombre: string;
 
-  @Field({ description: 'Pais destino del material' })
-  pais: string;
-
-  @Field({ description: 'Empresa destino del material' })
-  empresa: string;
-
-  @Field({ description: 'Direccion de almacenado' })
-  almacenado: string;
-
-  @Field({ description: 'Tipo de material' })
-  material: string;
+  @Field((type) => [Muestra], { nullable: true })
+  muestras: Muestra[];
 }
