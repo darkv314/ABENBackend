@@ -12,14 +12,19 @@ import {
 import { Roles } from 'src/auth/decorators/rol.decorator';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { RolGuard } from 'src/auth/guards/rol.guard';
-import Servicio from './model/servicio.model';
+import { Servicio, ServicioInput } from './model/servicio.model';
 import { ServiciosService } from './servicios.service';
+import Estado from '../estados/model/estado.model';
+import { EstadosService } from '../estados/estados.service';
 // import { CrearServiciosInput } from './dto/crearServicios..dto';
 
 @UseGuards(JwtAuthGuard, RolGuard)
 @Resolver((of) => Servicio)
 export class ServiciosResolver {
-  constructor(private serviciosService: ServiciosService) {}
+  constructor(
+    private serviciosService: ServiciosService,
+    private estadosService: EstadosService,
+  ) {}
 
   @Roles('admin', 'cliente')
   @Query((returns) => [Servicio], { nullable: true, name: 'servicios' })
@@ -27,38 +32,18 @@ export class ServiciosResolver {
     return this.serviciosService.findAllUserServices(usuarioId);
   }
 
-  // @Roles('admin', 'cliente')
-  // @Mutation((returns) => Servicio, { name: 'servicioCalibracion' })
-  // async crearServicioCalibracion(
-  //   @Args('equipos', { type: () => [CrearEquipo] }) equipos: CrearEquipo[],
-  //   @Context() context,
-  // ) {
-  //   console.log(context.req.user);
-  //   return this.serviciosService.crearCalibracion(equipos, context.req.user);
-  // }
+  @Roles('cliente')
+  @Mutation((returns) => [Servicio], { name: 'crearServicios' })
+  async crearServicios(
+    @Args('servicios', { type: () => [ServicioInput] })
+    servicios: ServicioInput[],
+  ) {
+    return this.serviciosService.crearServicios(servicios);
+  }
 
-  // @Roles('admin', 'cliente')
-  // @Mutation((returns) => Servicio, { name: 'servicioAnalisis' })
-  // async crearServicioAnalisis(
-  //   @Args('muestras', { type: () => [CrearMuestra] }) muestras: CrearMuestra[],
-  //   @Context() context,
-  // ) {
-  //   console.log(context.req.user);
-  //   return this.serviciosService.crearAnalisis(muestras, context.req.user);
-  // }
-
-  // @Roles('admin', 'cliente')
-  // @Mutation((returns) => Response, { name: 'crearServicios' })
-  // async crearServicios(
-  //   @Args('servicios', { type: () => CrearServiciosInput })
-  //   servicios: CrearServiciosInput,
-  // ) {
-  //   return this.serviciosService.crearServicios(servicios);
-  // }
-
-  // @ResolveField((returns) => [CrearEmpleado], { nullable: true })
-  // async empleados(@Parent() servicio: Servicio) {
-  //   const { id } = servicio;
-  //   return this.serviciosService.findAllEmployeesFromService(id);
-  // }
+  @ResolveField((returns) => Estado)
+  async estado(@Parent() servicio: Servicio) {
+    const { id } = servicio;
+    return this.estadosService.findByServicioId(id);
+  }
 }

@@ -13,7 +13,7 @@ import { Roles } from 'src/auth/decorators/rol.decorator';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { RolGuard } from 'src/auth/guards/rol.guard';
 import Usuario from './model/usuario.model';
-import Servicio from '../servicios/model/servicio.model';
+import { Servicio } from '../servicios/model/servicio.model';
 import { ServiciosService } from '../servicios/servicios.service';
 import Estado from '../estados/model/estado.model';
 import { EstadosService } from '../estados/estados.service';

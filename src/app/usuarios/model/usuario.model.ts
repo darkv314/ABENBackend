@@ -1,6 +1,6 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
 import Estado from 'src/app/estados/model/estado.model';
-import Servicio from 'src/app/servicios/model/servicio.model';
+import { Servicio } from 'src/app/servicios/model/servicio.model';
 
 @ObjectType()
 export default class Usuario {

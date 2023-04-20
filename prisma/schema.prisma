@@ -39,8 +39,8 @@ model Usuario {
 model Estado {
   id         Int       @id @default(autoincrement())
   nombre     String    @default("iniciado")
-  empleado   Usuario   @relation(fields: [empleadoId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  empleadoId Int
+  empleado   Usuario?  @relation(fields: [empleadoId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  empleadoId Int?
   servicio   Servicio? @relation(fields: [servicioId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   servicioId Int       @unique
 }
@@ -49,7 +49,7 @@ model Servicio {
   id          Int          @id @default(autoincrement())
   nombre      String
   empresa     String
-  inicio      DateTime     @default(now())
+  inicio      DateTime?    @default(now())
   fin         DateTime?
   email       String
   telefono    String
@@ -75,7 +75,7 @@ model Documento {
 model Muestra {
   id             Int      @id @default(autoincrement())
   analisis       Analisis @relation(fields: [analisisId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  analisisId     Int      @unique
+  analisisId     Int
   tipo           String
   procedencia    String
   identificacion String
@@ -121,8 +121,9 @@ model Dosimetria {
   servicio     Servicio      @relation(fields: [servicioId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   servicioId   Int           @unique
   actividad    String
+  lecturas     Int
   empleados    Empleado[]
-  InfoCourrier InfoCourrier?
+  infoCourrier InfoCourrier?
 }
 
 model InfoCourrier {

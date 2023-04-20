@@ -12,4 +12,12 @@ export class EstadosService {
       },
     });
   }
+
+  findByServicioId(id: number) {
+    return this.prisma.estado.findUnique({
+      where: {
+        servicioId: id,
+      },
+    });
+  }
 }

@@ -61,6 +61,7 @@ type InfoCourrier {
 type Dosimetria {
   id: Int!
   actividad: String!
+  lecturas: Int!
   infoCourrier: InfoCourrier
   empleados: [Empleado!]
 }
@@ -78,9 +79,9 @@ type Servicio {
   nit: String!
   telefono: String!
   email: String!
-  analisis: [Analisis!]
-  calibraciones: [Calibracion!]
-  dosimetrias: [Dosimetria!]
+  analisis: Analisis
+  calibraciones: Calibracion
+  dosimetrias: Dosimetria
   documentos: [Documento!]
 }
 
@@ -140,77 +141,10 @@ input EstadoInput {
   nombre: String!
 }
 
-input MuestraInput {
-  id: Int!
-  tipo: String!
-  procedencia: String!
-  identificacion: String!
-  coordenadas: String
-}
-
-input AnalisisInput {
-  id: Int!
-  muestras: [MuestraInput!]
-}
-
-input EquipoInput {
-  id: Int!
-  nombre: String!
-  fabricante: String!
-  modelo: String!
-  serie: String!
-}
-
-input CalibracionInput {
-  id: Int!
-  equipos: [EquipoInput!]
-}
-
 input DocumentoInput {
   id: Int!
   nombre: String!
   link: String!
-}
-
-input EmpleadoInput {
-  id: Int!
-  nombre: String!
-  ci: String!
-  expedido: String!
-  cargo: String!
-}
-
-input InfoCourrierInput {
-  id: Int!
-  responsable: String!
-  telefono: String!
-  direccion: String!
-}
-
-input DosimetriaInput {
-  id: Int!
-  actividad: String!
-  infoCourrier: InfoCourrierInput
-  empleados: [EmpleadoInput!]
-}
-
-input ServicioInput {
-  id: Int!
-  nombre: String!
-  empresa: String!
-  inicio: Timestamp
-  fin: Timestamp
-  cantidad: Int!
-
-  """Estado del servicio"""
-  estado: EstadoInput
-  nit: String!
-  telefono: String!
-  email: String!
-  analisis: [AnalisisInput!]
-  calibraciones: [CalibracionInput!]
-  dosimetrias: [DosimetriaInput!]
-  documentos: [DocumentoInput!]
 }
 
 type Query {
@@ -223,6 +157,7 @@ type Query {
 
 type Mutation {
   createUsuario(usuario: CrearUsuarioInput!): Usuario!
+  crearServicios(servicios: [ServicioInput!]!): [Servicio!]!
   createRol(nombre: String!): Rol!
   updateRol(id: Float!): Rol!
   login(inputLogin: UsuarioInputLogin!): UsuarioAuth!
@@ -236,6 +171,61 @@ input CrearUsuarioInput {
   nit: String!
   telefono: String!
   rolId: Int!
+}
+
+input ServicioInput {
+  nombre: String!
+  empresa: String!
+  cantidad: Int!
+  nit: String!
+  telefono: String!
+  email: String!
+  analisis: AnalisisInput
+  calibracion: CalibracionInput
+  dosimetria: DosimetriaInput
+  usuarioId: Int!
+}
+
+input AnalisisInput {
+  muestras: [MuestraInput!]
+}
+
+input MuestraInput {
+  tipo: String!
+  procedencia: String!
+  identificacion: String!
+  coordenadas: String
+}
+
+input CalibracionInput {
+  equipos: [EquipoInput!]
+}
+
+input EquipoInput {
+  nombre: String!
+  fabricante: String!
+  modelo: String!
+  serie: String!
+}
+
+input DosimetriaInput {
+  actividad: String!
+  infoCourrier: InfoCourrierInput
+  lecturas: Int!
+  empleados: [EmpleadoInput!]
+}
+
+input InfoCourrierInput {
+  responsable: String!
+  telefono: String!
+  direccion: String!
+}
+
+input EmpleadoInput {
+  nombre: String!
+  ci: String!
+  expedido: String!
+  cargo: String!
 }
 
 input UsuarioInputLogin {
